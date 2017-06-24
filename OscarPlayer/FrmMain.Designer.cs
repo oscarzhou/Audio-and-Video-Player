@@ -38,29 +38,32 @@
             this.lbCurrentProgress = new System.Windows.Forms.Label();
             this.pbVolume = new System.Windows.Forms.ProgressBar();
             this.chkMute = new System.Windows.Forms.CheckBox();
+            this.btnClear = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lstItem
             // 
             this.lstItem.FormattingEnabled = true;
+            this.lstItem.HorizontalScrollbar = true;
             this.lstItem.ItemHeight = 18;
             this.lstItem.Location = new System.Drawing.Point(51, 26);
             this.lstItem.Name = "lstItem";
-            this.lstItem.Size = new System.Drawing.Size(234, 490);
+            this.lstItem.Size = new System.Drawing.Size(245, 490);
             this.lstItem.TabIndex = 0;
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(67, 522);
+            this.btnAdd.Location = new System.Drawing.Point(59, 522);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 43);
             this.btnAdd.TabIndex = 1;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(185, 522);
+            this.btnDelete.Location = new System.Drawing.Point(221, 522);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 43);
             this.btnDelete.TabIndex = 2;
@@ -127,11 +130,22 @@
             this.chkMute.Text = "Mute?";
             this.chkMute.UseVisualStyleBackColor = true;
             // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(140, 523);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(75, 42);
+            this.btnClear.TabIndex = 10;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1236, 598);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.chkMute);
             this.Controls.Add(this.pbVolume);
             this.Controls.Add(this.lbCurrentProgress);
@@ -161,6 +175,7 @@
         private System.Windows.Forms.Label lbCurrentProgress;
         private System.Windows.Forms.ProgressBar pbVolume;
         private System.Windows.Forms.CheckBox chkMute;
+        private System.Windows.Forms.Button btnClear;
     }
 }
 
