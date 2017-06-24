@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lstItem = new System.Windows.Forms.ListBox();
+            this.lbxPlaylist = new System.Windows.Forms.ListBox();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnPlay = new System.Windows.Forms.Button();
@@ -41,15 +41,15 @@
             this.btnClear = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // lstItem
+            // lbxPlaylist
             // 
-            this.lstItem.FormattingEnabled = true;
-            this.lstItem.HorizontalScrollbar = true;
-            this.lstItem.ItemHeight = 18;
-            this.lstItem.Location = new System.Drawing.Point(51, 26);
-            this.lstItem.Name = "lstItem";
-            this.lstItem.Size = new System.Drawing.Size(245, 490);
-            this.lstItem.TabIndex = 0;
+            this.lbxPlaylist.FormattingEnabled = true;
+            this.lbxPlaylist.HorizontalScrollbar = true;
+            this.lbxPlaylist.ItemHeight = 18;
+            this.lbxPlaylist.Location = new System.Drawing.Point(51, 26);
+            this.lbxPlaylist.Name = "lbxPlaylist";
+            this.lbxPlaylist.Size = new System.Drawing.Size(245, 490);
+            this.lbxPlaylist.TabIndex = 0;
             // 
             // btnAdd
             // 
@@ -157,7 +157,7 @@
             this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnAdd);
-            this.Controls.Add(this.lstItem);
+            this.Controls.Add(this.lbxPlaylist);
             this.Name = "FrmMain";
             this.Text = "OPlayer";
             this.ResumeLayout(false);
@@ -167,7 +167,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox lstItem;
+        private System.Windows.Forms.ListBox lbxPlaylist;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnPlay;

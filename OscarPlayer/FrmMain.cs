@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Media;
-using System.Text;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
+
 
 
 
@@ -12,13 +13,14 @@ namespace OscarPlayer
 {
     public partial class FrmMain : Form
     {
-        private readonly string _strPlayListPath = "";
         private List<string> lstPath = new List<string>();
+        private SoundPlayer player;
+        private WMPLib.WindowsMediaPlayer wplayer;
+        private Playlist playlist = new Playlist();
 
         public FrmMain()
         {
 
-            _strPlayListPath = Directory.GetCurrentDirectory() + "/Playlist/Playlist.txt";
             InitializeComponent();
             LoadListInfoFromText();
         }
@@ -26,52 +28,50 @@ namespace OscarPlayer
         #region Button operation
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            // Open the Browser Dialog
             FolderBrowserDialog folder = new FolderBrowserDialog();
-            
             if (folder.ShowDialog() == DialogResult.OK)
             {
                 var files = Directory.GetFiles(folder.SelectedPath).Where(name => name.EndsWith(".mp3") || name.EndsWith(".wma") || name.EndsWith(".wav"));
                 
                 foreach (var file in files.ToList())
                 {
-                    int pos = ((string) file).LastIndexOf(@"\", StringComparison.Ordinal);
-                    this.lstItem.Items.Add(file.Substring(pos + 1));
-                    lstPath.Add((string)file);   
+                    this.lbxPlaylist.Items.Add(this.playlist.AddPathToList((string)file));
                 }
             }
-            SaveListInfoToText(lstPath);
+            SaveListInfoToText(this.playlist);
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            this.lstItem.Items.Clear();
-            lstPath.Clear();
-            SaveListInfoToText(lstPath);
+            this.lbxPlaylist.Items.Clear();
+            this.playlist.ClearList();
+            SaveListInfoToText(this.playlist);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            lstPath.RemoveAt(this.lstItem.SelectedIndex);
-            this.lstItem.Items.Remove(this.lstItem.SelectedItem);
-            SaveListInfoToText(lstPath);
+            this.playlist.DeletePathFromList(this.lbxPlaylist.SelectedIndex);
+            this.lbxPlaylist.Items.Remove(this.lbxPlaylist.SelectedItem);
+            SaveListInfoToText(this.playlist);
         }
 
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            if (this.lstItem.Items.Count == 0)
+            if (this.lbxPlaylist.Items.Count == 0)
             {
                 MessageBox.Show("Please loading the playlist!");
                 return;
             }
             else
             {
-                if (this.lstItem.SelectedIndex == -1)
+                if (this.lbxPlaylist.SelectedIndex == -1)
                 {
                     MessageBox.Show("Please select an item!");
                 }
                 else
                 {
-                    PlaySound(lstPath[lstItem.SelectedIndex]);        
+                    PlaySound(lstPath[lbxPlaylist.SelectedIndex]);        
                 }
                 
             }
@@ -83,45 +83,51 @@ namespace OscarPlayer
 
         #region Save and load data
 
-        private void SaveListInfoToText(List<string> listPath)
+        private void SaveListInfoToText(Playlist objPlaylist)
         {
-            FileStream fs = new FileStream(_strPlayListPath, FileMode.Create);
-            StreamWriter sw = new StreamWriter(fs, Encoding.Unicode);
-            foreach (string item in listPath)
-            {
-                sw.WriteLine(item);
-            }
-            sw.Close();
+            //FileStream fs = new FileStream(Playlist._strPlayListPath, FileMode.Create);
+            //StreamWriter sw = new StreamWriter(fs, Encoding.Unicode);
+            //foreach (string item in objPlaylist.ReadPathsFromList())
+            //{
+            //    sw.WriteLine(item);
+            //}
+            //sw.Close();
+            //fs.Close();
+            FileStream fs = new FileStream(Playlist._strPlayListPath, FileMode.Create);
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(fs, objPlaylist);
             fs.Close();
 
         }
 
         private void LoadListInfoFromText()
         {
-            if (File.Exists(_strPlayListPath))
+            if (File.Exists(Playlist._strPlayListPath))
             {
-                FileStream fs = new FileStream(_strPlayListPath, FileMode.Open);
-                StreamReader sr = new StreamReader(fs, Encoding.Unicode);
-                //                List<string> playlist = new List<string>();
-                string item = "";
-                while ((item = sr.ReadLine()) != null)
+                //FileStream fs = new FileStream(Playlist._strPlayListPath, FileMode.Open);
+                //StreamReader sr = new StreamReader(fs, Encoding.Unicode);
+                //string item = "";
+                //while ((item = sr.ReadLine()) != null)
+                //{
+                //    this.lbxPlaylist.Items.Add(this.playlist.AddPathToList((string)item));
+                //}
+                //sr.Close();
+                //fs.Close();
+                FileStream fs = new FileStream(Playlist._strPlayListPath, FileMode.Open);
+                BinaryFormatter formatter = new BinaryFormatter();
+                Playlist objPlaylist = (Playlist)formatter.Deserialize(fs);
+                foreach (string item in objPlaylist.ReadPathsFromList())
                 {
-                    //                    playlist.Add(item);
-                    int pos = item.LastIndexOf(@"\", StringComparison.Ordinal);
-                    this.lstItem.Items.Add(item.Substring(pos + 1));
-                    lstPath.Add(item);
+                    this.lbxPlaylist.Items.Add(this.playlist.AddPathToList(item));
                 }
-                sr.Close();
                 fs.Close();
             }
-
-
         }
         
 
         #endregion
 
-        #region Play sound
+        #region Audio operation
 
         private void PlaySound(string path)
         {
@@ -132,18 +138,27 @@ namespace OscarPlayer
             
             if (fileType.ToLower().Equals("wav"))
             {
-                SoundPlayer player = new SoundPlayer();
+                player = new SoundPlayer();
                 player.SoundLocation = path;
                 player.Load();
                 player.Play();    
             }
             else if (fileType.ToLower().Equals("mp3") || fileType.ToLower().Equals("wma"))
             {
-                WMPLib.WindowsMediaPlayer wplayer = new WMPLib.WindowsMediaPlayer();
+                wplayer = new WMPLib.WindowsMediaPlayer();
                 wplayer.URL = path;
                 wplayer.controls.play();
             }
             
+        }
+
+
+        private void StopSound()
+        {
+            if (player.IsLoadCompleted)
+            {
+                
+            }
         }
 
         #endregion
