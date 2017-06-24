@@ -79,6 +79,7 @@
             this.btnPlay.TabIndex = 3;
             this.btnPlay.Text = "Play";
             this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
             // 
             // btnStop
             // 
