@@ -10,7 +10,5 @@ namespace OscarPlayer
         void ResumeSound();
 
         void StopSound();
-
-        
     }
 }

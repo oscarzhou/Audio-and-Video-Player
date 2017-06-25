@@ -115,11 +115,14 @@ namespace OscarPlayer
 
         private void PlaySound(string path)
         {
-            
+            if (_objPlayer != null)
+            {
+                return;
+            }
+
             int pos = path.LastIndexOf(@".", StringComparison.Ordinal);
             string fileType = path.Substring(pos + 1);
-            
-            
+
             if (fileType.ToLower().Equals("wav"))
             {
                 _objPlayer = new WAVPlayer();
@@ -139,6 +142,7 @@ namespace OscarPlayer
             if (_objPlayer != null )
             {
                 _objPlayer.StopSound();
+                _objPlayer = null;
             }
         }
 

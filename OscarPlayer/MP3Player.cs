@@ -12,6 +12,7 @@ namespace OscarPlayer
             _objPlayer = new WindowsMediaPlayerClass();
         }
 
+
         public void PlaySound(string url)
         {
             _objPlayer.URL = url;
@@ -30,7 +31,12 @@ namespace OscarPlayer
 
         public void StopSound()
         {
+            if (_objPlayer != null)
+            {
+                _objPlayer.controls.pause();
+            }
             
         }
+
     }
 }

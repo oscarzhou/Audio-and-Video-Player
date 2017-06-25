@@ -5,12 +5,14 @@ namespace OscarPlayer
 {
     class WAVPlayer:IPlayer
     {
-        private readonly SoundPlayer _objPlayer;
+        private SoundPlayer _objPlayer;
 
         public WAVPlayer()
         {
             _objPlayer = new SoundPlayer();
         }
+
+
         public void PlaySound(string url)
         {
             _objPlayer.SoundLocation = url;
@@ -31,6 +33,10 @@ namespace OscarPlayer
 
         public void StopSound()
         {
+            if (_objPlayer != null)
+            {
+                _objPlayer.Stop();    
+            }
             
         }
     }
