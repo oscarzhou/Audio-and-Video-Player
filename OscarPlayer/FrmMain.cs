@@ -19,6 +19,9 @@ namespace OscarPlayer
 
             InitializeComponent();
             LoadListInfoFromText();
+            btnPlay.Visible = true;
+            btnResume.Visible = false;
+            btnPause.Visible = true;
         }
 
         #region Button operation
@@ -71,12 +74,31 @@ namespace OscarPlayer
                 }
                 
             }
+            btnPlay.Visible = true;
+            btnResume.Visible = false;
+            btnPause.Visible = true;
             
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
             StopSound();
+        }
+
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+            PauseSound();
+            btnPlay.Visible = false;
+            btnResume.Visible = true;
+            btnPause.Visible = true;
+        }
+
+        private void btnResume_Click(object sender, EventArgs e)
+        {
+            ResumeSound();
+            btnPlay.Visible = true;
+            btnResume.Visible = false;
+            btnPause.Visible = true;
         }
 
         #endregion
@@ -117,7 +139,7 @@ namespace OscarPlayer
         {
             if (_objPlayer != null)
             {
-                return;
+                StopSound();
             }
 
             int pos = path.LastIndexOf(@".", StringComparison.Ordinal);
@@ -146,7 +168,25 @@ namespace OscarPlayer
             }
         }
 
+        private void PauseSound()
+        {
+            if (_objPlayer != null)
+            {
+                _objPlayer.PauseSound();
+            }
+        }
+
+        private void ResumeSound()
+        {
+            if (_objPlayer != null)
+            {
+                _objPlayer.ResumeSound();
+            }
+        }
+
         #endregion
+
+      
 
         
 

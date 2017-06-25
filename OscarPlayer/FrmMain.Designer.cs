@@ -39,6 +39,7 @@
             this.pbVolume = new System.Windows.Forms.ProgressBar();
             this.chkMute = new System.Windows.Forms.CheckBox();
             this.btnClear = new System.Windows.Forms.Button();
+            this.btnResume = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lbxPlaylist
@@ -93,12 +94,13 @@
             // 
             // btnPause
             // 
-            this.btnPause.Location = new System.Drawing.Point(640, 522);
+            this.btnPause.Location = new System.Drawing.Point(647, 523);
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(75, 43);
             this.btnPause.TabIndex = 5;
             this.btnPause.Text = "Pause";
             this.btnPause.UseVisualStyleBackColor = true;
+            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
             // 
             // pbProgress
             // 
@@ -143,11 +145,22 @@
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
+            // btnResume
+            // 
+            this.btnResume.Location = new System.Drawing.Point(745, 523);
+            this.btnResume.Name = "btnResume";
+            this.btnResume.Size = new System.Drawing.Size(75, 43);
+            this.btnResume.TabIndex = 11;
+            this.btnResume.Text = "Resume";
+            this.btnResume.UseVisualStyleBackColor = true;
+            this.btnResume.Click += new System.EventHandler(this.btnResume_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1236, 598);
+            this.Controls.Add(this.btnResume);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.chkMute);
             this.Controls.Add(this.pbVolume);
@@ -179,6 +192,7 @@
         private System.Windows.Forms.ProgressBar pbVolume;
         private System.Windows.Forms.CheckBox chkMute;
         private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Button btnResume;
     }
 }
 

@@ -21,19 +21,25 @@ namespace OscarPlayer
 
         public void PauseSound()
         {
-            throw new System.NotImplementedException();
+            if (_objPlayer != null)
+            {
+                _objPlayer.controls.pause();
+            }
         }
 
         public void ResumeSound()
         {
-            throw new System.NotImplementedException();
+            if (_objPlayer != null)
+            {
+                _objPlayer.controls.play();
+            }
         }
 
         public void StopSound()
         {
             if (_objPlayer != null)
             {
-                _objPlayer.controls.pause();
+                _objPlayer.controls.stop();
             }
             
         }

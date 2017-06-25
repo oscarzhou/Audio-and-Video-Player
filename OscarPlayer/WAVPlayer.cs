@@ -23,7 +23,10 @@ namespace OscarPlayer
 
         public void PauseSound()
         {
-            throw new NotImplementedException();
+            if (_objPlayer != null)
+            {
+                
+            }
         }
 
         public void ResumeSound()
