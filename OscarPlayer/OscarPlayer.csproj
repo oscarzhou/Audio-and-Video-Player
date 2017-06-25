@@ -50,6 +50,9 @@
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="IPlayer.cs" />
+    <Compile Include="MP3Player.cs" />
+    <Compile Include="WAVPlayer.cs" />
     <Compile Include="Playlist.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

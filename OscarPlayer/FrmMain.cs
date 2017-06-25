@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Media;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
@@ -13,10 +11,8 @@ namespace OscarPlayer
 {
     public partial class FrmMain : Form
     {
-        private List<string> lstPath = new List<string>();
-        private SoundPlayer player;
-        private WMPLib.WindowsMediaPlayer wplayer;
-        private Playlist playlist = new Playlist();
+        private Playlist _objPlaylist = new Playlist();
+        private IPlayer _objPlayer = null;
 
         public FrmMain()
         {
@@ -36,24 +32,24 @@ namespace OscarPlayer
                 
                 foreach (var file in files.ToList())
                 {
-                    this.lbxPlaylist.Items.Add(this.playlist.AddPathToList((string)file));
+                    this.lbxPlaylist.Items.Add(this._objPlaylist.AddPathToList((string)file));
                 }
             }
-            SaveListInfoToText(this.playlist);
+            SaveListInfoToText(this._objPlaylist);
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
             this.lbxPlaylist.Items.Clear();
-            this.playlist.ClearList();
-            SaveListInfoToText(this.playlist);
+            this._objPlaylist.ClearList();
+            SaveListInfoToText(this._objPlaylist);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            this.playlist.DeletePathFromList(this.lbxPlaylist.SelectedIndex);
+            this._objPlaylist.DeletePathFromList(this.lbxPlaylist.SelectedIndex);
             this.lbxPlaylist.Items.Remove(this.lbxPlaylist.SelectedItem);
-            SaveListInfoToText(this.playlist);
+            SaveListInfoToText(this._objPlaylist);
         }
 
         private void btnPlay_Click(object sender, EventArgs e)
@@ -71,11 +67,16 @@ namespace OscarPlayer
                 }
                 else
                 {
-                    PlaySound(lstPath[lbxPlaylist.SelectedIndex]);        
+                    PlaySound(_objPlaylist.ReadPathsFromList()[lbxPlaylist.SelectedIndex]);        
                 }
                 
             }
             
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            StopSound();
         }
 
         #endregion
@@ -85,14 +86,6 @@ namespace OscarPlayer
 
         private void SaveListInfoToText(Playlist objPlaylist)
         {
-            //FileStream fs = new FileStream(Playlist._strPlayListPath, FileMode.Create);
-            //StreamWriter sw = new StreamWriter(fs, Encoding.Unicode);
-            //foreach (string item in objPlaylist.ReadPathsFromList())
-            //{
-            //    sw.WriteLine(item);
-            //}
-            //sw.Close();
-            //fs.Close();
             FileStream fs = new FileStream(Playlist._strPlayListPath, FileMode.Create);
             BinaryFormatter formatter = new BinaryFormatter();
             formatter.Serialize(fs, objPlaylist);
@@ -104,21 +97,12 @@ namespace OscarPlayer
         {
             if (File.Exists(Playlist._strPlayListPath))
             {
-                //FileStream fs = new FileStream(Playlist._strPlayListPath, FileMode.Open);
-                //StreamReader sr = new StreamReader(fs, Encoding.Unicode);
-                //string item = "";
-                //while ((item = sr.ReadLine()) != null)
-                //{
-                //    this.lbxPlaylist.Items.Add(this.playlist.AddPathToList((string)item));
-                //}
-                //sr.Close();
-                //fs.Close();
                 FileStream fs = new FileStream(Playlist._strPlayListPath, FileMode.Open);
                 BinaryFormatter formatter = new BinaryFormatter();
                 Playlist objPlaylist = (Playlist)formatter.Deserialize(fs);
                 foreach (string item in objPlaylist.ReadPathsFromList())
                 {
-                    this.lbxPlaylist.Items.Add(this.playlist.AddPathToList(item));
+                    this.lbxPlaylist.Items.Add(this._objPlaylist.AddPathToList(item));
                 }
                 fs.Close();
             }
@@ -138,30 +122,29 @@ namespace OscarPlayer
             
             if (fileType.ToLower().Equals("wav"))
             {
-                player = new SoundPlayer();
-                player.SoundLocation = path;
-                player.Load();
-                player.Play();    
+                _objPlayer = new WAVPlayer();
             }
             else if (fileType.ToLower().Equals("mp3") || fileType.ToLower().Equals("wma"))
             {
-                wplayer = new WMPLib.WindowsMediaPlayer();
-                wplayer.URL = path;
-                wplayer.controls.play();
+                _objPlayer = new MP3Player();
+                
             }
+            _objPlayer.PlaySound(path);
             
         }
 
 
         private void StopSound()
         {
-            if (player.IsLoadCompleted)
+            if (_objPlayer != null )
             {
-                
+                _objPlayer.StopSound();
             }
         }
 
         #endregion
+
+        
 
         
         
