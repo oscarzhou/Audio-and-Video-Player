@@ -7,6 +7,7 @@ namespace OscarPlayer
     {
         private WMPLib.WindowsMediaPlayer _objPlayer;
 
+
         public MP3Player()
         {
             _objPlayer = new WindowsMediaPlayerClass();

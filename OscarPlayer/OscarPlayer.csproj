@@ -52,6 +52,7 @@
     </Compile>
     <Compile Include="IPlayer.cs" />
     <Compile Include="MP3Player.cs" />
+    <Compile Include="SoundDevice.cs" />
     <Compile Include="WAVPlayer.cs" />
     <Compile Include="Playlist.cs" />
     <Compile Include="Program.cs" />
@@ -102,6 +103,12 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PC_VolumeControl\PC_VolumeControl.csproj">
+      <Project>{6ca4d9e1-8adb-438b-b830-d5cdb6f60629}</Project>
+      <Name>PC_VolumeControl</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

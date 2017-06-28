@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
+
 
 
 
@@ -11,8 +13,28 @@ namespace OscarPlayer
 {
     public partial class FrmMain : Form
     {
+        #region Paramters declaration
+
         private Playlist _objPlaylist = new Playlist();
         private IPlayer _objPlayer = null;
+        private int curVol = 20;
+
+        private const int APPCOMMAND_VOLUME_MUTE = 0x80000;
+        private const int APPCOMMAND_VOLUME_UP = 0xA0000;
+        private const int APPCOMMAND_VOLUME_DOWN = 0x90000;
+        private const int WM_APPCOMMAND = 0x319;
+
+
+        #endregion
+
+        #region reference extern library
+        
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr SendMessageW(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
+
+        #endregion
+
 
         public FrmMain()
         {
@@ -22,9 +44,14 @@ namespace OscarPlayer
             btnPlay.Visible = true;
             btnResume.Visible = false;
             btnPause.Visible = true;
+
+
+            SetVolume(curVol);
+            //tbVolume.Value = GetVolume();
+
         }
 
-        #region Button operation
+        #region Control operation
         private void btnAdd_Click(object sender, EventArgs e)
         {
             // Open the Browser Dialog
@@ -101,8 +128,6 @@ namespace OscarPlayer
             btnPause.Visible = true;
         }
 
-
-
         private void lbxPlaylist_DoubleClick(object sender, EventArgs e)
         {
             if (this.lbxPlaylist.Items.Count == 0)
@@ -127,7 +152,18 @@ namespace OscarPlayer
             btnPause.Visible = true;
         }
 
-      
+
+        private void chkMute_CheckedChanged(object sender, EventArgs e)
+        {
+            tbVolume.Enabled = !chkMute.Checked;
+            SendMessageW(this.Handle, WM_APPCOMMAND, this.Handle, (IntPtr) APPCOMMAND_VOLUME_MUTE);
+        }
+
+
+        private void tbVolume_Scroll(object sender, EventArgs e)
+        {
+            SetVolume(tbVolume.Value);
+        }
 
         #endregion
  
@@ -212,7 +248,31 @@ namespace OscarPlayer
             }
         }
 
+        private void SetVolume(int volume)
+        {
+
+            int nextVol = tbVolume.Value;
+            if (this.curVol > nextVol)
+            {
+                SendMessageW(this.Handle, WM_APPCOMMAND, this.Handle, (IntPtr) APPCOMMAND_VOLUME_DOWN);
+                this.curVol = nextVol;
+            }
+            else
+            {
+                SendMessageW(this.Handle, WM_APPCOMMAND, this.Handle, (IntPtr)APPCOMMAND_VOLUME_UP);
+                this.curVol = nextVol;
+                
+            }
+            
+        }
+
+        private int GetVolume()
+        {
+            return 0;
+        }
+
         #endregion
+
 
 
         
