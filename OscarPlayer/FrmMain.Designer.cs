@@ -51,6 +51,7 @@
             this.lbxPlaylist.Name = "lbxPlaylist";
             this.lbxPlaylist.Size = new System.Drawing.Size(245, 490);
             this.lbxPlaylist.TabIndex = 0;
+            this.lbxPlaylist.DoubleClick += new System.EventHandler(this.lbxPlaylist_DoubleClick);
             // 
             // btnAdd
             // 

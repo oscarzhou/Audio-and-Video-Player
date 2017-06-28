@@ -101,6 +101,34 @@ namespace OscarPlayer
             btnPause.Visible = true;
         }
 
+
+
+        private void lbxPlaylist_DoubleClick(object sender, EventArgs e)
+        {
+            if (this.lbxPlaylist.Items.Count == 0)
+            {
+                MessageBox.Show("Please loading the playlist!");
+                return;
+            }
+            else
+            {
+                if (this.lbxPlaylist.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Please select an item!");
+                }
+                else
+                {
+                    PlaySound(_objPlaylist.ReadPathsFromList()[lbxPlaylist.SelectedIndex]);
+                }
+
+            }
+            btnPlay.Visible = true;
+            btnResume.Visible = false;
+            btnPause.Visible = true;
+        }
+
+      
+
         #endregion
  
 
@@ -186,7 +214,6 @@ namespace OscarPlayer
 
         #endregion
 
-      
 
         
 
