@@ -27,13 +27,13 @@ namespace OscarPlayer
 
         #endregion
 
-        //#region reference extern library
+        #region reference extern library
         
 
         //[DllImport("user32.dll")]
         //public static extern IntPtr SendMessageW(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
 
-        //#endregion
+        #endregion
 
 
         public FrmMain()
@@ -178,6 +178,29 @@ namespace OscarPlayer
 
         }
 
+        private void btnNextItem_Click(object sender, EventArgs e)
+        {
+            int nextItem = 0;
+            if (lbxPlaylist.SelectedIndex != lbxPlaylist.Items.Count - 1)
+            {
+                nextItem = lbxPlaylist.SelectedIndex + 1;
+            }
+            else
+            {
+                nextItem = 0;
+            }
+            PlaySound(_objPlaylist.ReadPathsFromList()[nextItem]);
+
+            lbxPlaylist.SelectedIndex = nextItem;
+            lbxPlaylist.Focus();
+            btnPlay.Visible = true;
+            btnResume.Visible = false;
+            btnPause.Visible = true;
+
+        }
+
+
+
         #endregion
  
 
@@ -297,7 +320,7 @@ namespace OscarPlayer
 
         #endregion
 
-
+     
 
         
 

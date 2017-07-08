@@ -41,6 +41,7 @@
             this.tbPlayProgress = new System.Windows.Forms.TrackBar();
             this.tbVolume = new System.Windows.Forms.TrackBar();
             this.lbVolume = new System.Windows.Forms.Label();
+            this.btnNextItem = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.tbPlayProgress)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbVolume)).BeginInit();
             this.SuspendLayout();
@@ -173,11 +174,22 @@
             this.lbVolume.TabIndex = 14;
             this.lbVolume.Text = "Vol.100";
             // 
+            // btnNextItem
+            // 
+            this.btnNextItem.Location = new System.Drawing.Point(808, 522);
+            this.btnNextItem.Name = "btnNextItem";
+            this.btnNextItem.Size = new System.Drawing.Size(75, 43);
+            this.btnNextItem.TabIndex = 15;
+            this.btnNextItem.Text = "Next";
+            this.btnNextItem.UseVisualStyleBackColor = true;
+            this.btnNextItem.Click += new System.EventHandler(this.btnNextItem_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1236, 598);
+            this.Controls.Add(this.btnNextItem);
             this.Controls.Add(this.lbVolume);
             this.Controls.Add(this.tbVolume);
             this.Controls.Add(this.btnResume);
@@ -215,6 +227,7 @@
         private System.Windows.Forms.TrackBar tbPlayProgress;
         private System.Windows.Forms.TrackBar tbVolume;
         private System.Windows.Forms.Label lbVolume;
+        private System.Windows.Forms.Button btnNextItem;
     }
 }
 
