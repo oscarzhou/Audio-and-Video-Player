@@ -14,7 +14,7 @@ namespace OscarPlayer
 
         private readonly Playlist _objPlaylist = new Playlist();
         private IPlayer _objPlayer = null;
-        private readonly int _curVol = 20;
+        private int _curVol = 0;
 
         //private const int APPCOMMAND_VOLUME_MUTE = 0x80000;
         //private const int APPCOMMAND_VOLUME_UP = 0xA0000;
@@ -57,9 +57,7 @@ namespace OscarPlayer
             tbVolume.Enabled = !chkMute.Checked;
             
             // Set the current volume
-            _curVol = GetVolume();
-            SetVolume(_curVol);
-            tbVolume.Value = _curVol;
+            AdjustCurrentVolume();
 
         }
 
@@ -177,6 +175,7 @@ namespace OscarPlayer
         private void tbVolume_Scroll(object sender, EventArgs e)
         {
             SetVolume(tbVolume.Value);
+
         }
 
         #endregion
@@ -265,7 +264,7 @@ namespace OscarPlayer
         private void SetVolume(int volume)
         {
             _defaultPlaybackDevice.Volume = volume;
-
+            lbVolume.Text = "Vol. " + volume.ToString();
 
             //int nextVol = tbVolume.Value;
 
@@ -288,6 +287,13 @@ namespace OscarPlayer
             return (int)_defaultPlaybackDevice.Volume;
         }
 
+        private void AdjustCurrentVolume()
+        {
+            _curVol = GetVolume();
+            SetVolume(_curVol);
+            tbVolume.Value = _curVol;
+            lbVolume.Text = "Vol. " + _curVol.ToString();
+        }
 
         #endregion
 

@@ -40,6 +40,7 @@
             this.btnResume = new System.Windows.Forms.Button();
             this.tbPlayProgress = new System.Windows.Forms.TrackBar();
             this.tbVolume = new System.Windows.Forms.TrackBar();
+            this.lbVolume = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.tbPlayProgress)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbVolume)).BeginInit();
             this.SuspendLayout();
@@ -77,7 +78,7 @@
             // 
             // btnPlay
             // 
-            this.btnPlay.Location = new System.Drawing.Point(745, 522);
+            this.btnPlay.Location = new System.Drawing.Point(604, 522);
             this.btnPlay.Name = "btnPlay";
             this.btnPlay.Size = new System.Drawing.Size(75, 43);
             this.btnPlay.TabIndex = 3;
@@ -87,7 +88,7 @@
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(849, 522);
+            this.btnStop.Location = new System.Drawing.Point(708, 522);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(75, 43);
             this.btnStop.TabIndex = 4;
@@ -97,7 +98,7 @@
             // 
             // btnPause
             // 
-            this.btnPause.Location = new System.Drawing.Point(647, 523);
+            this.btnPause.Location = new System.Drawing.Point(506, 523);
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(75, 43);
             this.btnPause.TabIndex = 5;
@@ -137,7 +138,7 @@
             // 
             // btnResume
             // 
-            this.btnResume.Location = new System.Drawing.Point(745, 523);
+            this.btnResume.Location = new System.Drawing.Point(604, 523);
             this.btnResume.Name = "btnResume";
             this.btnResume.Size = new System.Drawing.Size(75, 43);
             this.btnResume.TabIndex = 11;
@@ -163,11 +164,21 @@
             this.tbVolume.TickStyle = System.Windows.Forms.TickStyle.None;
             this.tbVolume.Scroll += new System.EventHandler(this.tbVolume_Scroll);
             // 
+            // lbVolume
+            // 
+            this.lbVolume.AutoSize = true;
+            this.lbVolume.Location = new System.Drawing.Point(989, 558);
+            this.lbVolume.Name = "lbVolume";
+            this.lbVolume.Size = new System.Drawing.Size(71, 18);
+            this.lbVolume.TabIndex = 14;
+            this.lbVolume.Text = "Vol.100";
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1236, 598);
+            this.Controls.Add(this.lbVolume);
             this.Controls.Add(this.tbVolume);
             this.Controls.Add(this.btnResume);
             this.Controls.Add(this.btnClear);
@@ -203,6 +214,7 @@
         private System.Windows.Forms.Button btnResume;
         private System.Windows.Forms.TrackBar tbPlayProgress;
         private System.Windows.Forms.TrackBar tbVolume;
+        private System.Windows.Forms.Label lbVolume;
     }
 }
 
