@@ -1,12 +1,9 @@
-﻿using System;
+﻿using AudioSwitcher.AudioApi.CoreAudio;
+using System;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
-
-
-
 
 
 namespace OscarPlayer
@@ -15,25 +12,28 @@ namespace OscarPlayer
     {
         #region Paramters declaration
 
-        private Playlist _objPlaylist = new Playlist();
+        private readonly Playlist _objPlaylist = new Playlist();
         private IPlayer _objPlayer = null;
-        private int curVol = 20;
+        private readonly int _curVol = 20;
 
-        private const int APPCOMMAND_VOLUME_MUTE = 0x80000;
-        private const int APPCOMMAND_VOLUME_UP = 0xA0000;
-        private const int APPCOMMAND_VOLUME_DOWN = 0x90000;
-        private const int WM_APPCOMMAND = 0x319;
+        //private const int APPCOMMAND_VOLUME_MUTE = 0x80000;
+        //private const int APPCOMMAND_VOLUME_UP = 0xA0000;
+        //private const int APPCOMMAND_VOLUME_DOWN = 0x90000;
+        //private const int WM_APPCOMMAND = 0x319;
+
+
+        private readonly CoreAudioDevice _defaultPlaybackDevice = new CoreAudioController().DefaultPlaybackDevice;
 
 
         #endregion
 
-        #region reference extern library
+        //#region reference extern library
         
 
-        [DllImport("user32.dll")]
-        public static extern IntPtr SendMessageW(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
+        //[DllImport("user32.dll")]
+        //public static extern IntPtr SendMessageW(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
 
-        #endregion
+        //#endregion
 
 
         public FrmMain()
@@ -45,9 +45,21 @@ namespace OscarPlayer
             btnResume.Visible = false;
             btnPause.Visible = true;
 
-
-            SetVolume(curVol);
-            //tbVolume.Value = GetVolume();
+            // Determine if the system volume is muted
+            if (_defaultPlaybackDevice.IsMuted)
+            {
+                chkMute.Checked = true;
+            }
+            else
+            {
+                chkMute.Checked = false;
+            }
+            tbVolume.Enabled = !chkMute.Checked;
+            
+            // Set the current volume
+            _curVol = GetVolume();
+            SetVolume(_curVol);
+            tbVolume.Value = _curVol;
 
         }
 
@@ -156,7 +168,9 @@ namespace OscarPlayer
         private void chkMute_CheckedChanged(object sender, EventArgs e)
         {
             tbVolume.Enabled = !chkMute.Checked;
-            SendMessageW(this.Handle, WM_APPCOMMAND, this.Handle, (IntPtr) APPCOMMAND_VOLUME_MUTE);
+            _defaultPlaybackDevice.ToggleMute();
+            //SendMessageW(this.Handle, WM_APPCOMMAND, this.Handle, (IntPtr) APPCOMMAND_VOLUME_MUTE);
+            
         }
 
 
@@ -250,26 +264,30 @@ namespace OscarPlayer
 
         private void SetVolume(int volume)
         {
+            _defaultPlaybackDevice.Volume = volume;
 
-            int nextVol = tbVolume.Value;
-            if (this.curVol > nextVol)
-            {
-                SendMessageW(this.Handle, WM_APPCOMMAND, this.Handle, (IntPtr) APPCOMMAND_VOLUME_DOWN);
-                this.curVol = nextVol;
-            }
-            else
-            {
-                SendMessageW(this.Handle, WM_APPCOMMAND, this.Handle, (IntPtr)APPCOMMAND_VOLUME_UP);
-                this.curVol = nextVol;
-                
-            }
-            
+
+            //int nextVol = tbVolume.Value;
+
+            //if (this.curVol > nextVol)
+            //{
+            //    SendMessageW(this.Handle, WM_APPCOMMAND, this.Handle, (IntPtr) APPCOMMAND_VOLUME_DOWN);
+            //    this.curVol = nextVol;
+            //}
+            //else
+            //{
+            //    SendMessageW(this.Handle, WM_APPCOMMAND, this.Handle, (IntPtr)APPCOMMAND_VOLUME_UP);
+            //    this.curVol = nextVol;
+
+            //}
+
         }
 
-        private int GetVolume()
+        private int  GetVolume()
         {
-            return 0;
+            return (int)_defaultPlaybackDevice.Volume;
         }
+
 
         #endregion
 

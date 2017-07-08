@@ -5,8 +5,6 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OscarPlayer", "OscarPlayer\OscarPlayer.csproj", "{DE69E3CA-F737-4785-B8EC-EAB8A86A8D1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PC_VolumeControl", "PC_VolumeControl\PC_VolumeControl.csproj", "{6CA4D9E1-8ADB-438B-B830-D5CDB6F60629}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{DE69E3CA-F737-4785-B8EC-EAB8A86A8D1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE69E3CA-F737-4785-B8EC-EAB8A86A8D1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE69E3CA-F737-4785-B8EC-EAB8A86A8D1F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6CA4D9E1-8ADB-438B-B830-D5CDB6F60629}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6CA4D9E1-8ADB-438B-B830-D5CDB6F60629}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6CA4D9E1-8ADB-438B-B830-D5CDB6F60629}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6CA4D9E1-8ADB-438B-B830-D5CDB6F60629}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
