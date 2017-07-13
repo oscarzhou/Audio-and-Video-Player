@@ -72,7 +72,7 @@ namespace OscarPlayer
                 
                 foreach (var file in files.ToList())
                 {
-                    this.lbxPlaylist.Items.Add(this._objPlaylist.AddPathToList((string)file));
+                    this.lbxPlaylist.Items.Add(this._objPlaylist.ParsePathToFile((string)file));
                 }
             }
             SaveListInfoToText(this._objPlaylist);
@@ -208,6 +208,12 @@ namespace OscarPlayer
 
         private void SaveListInfoToText(Playlist objPlaylist)
         {
+            if (!File.Exists(Playlist._strPlayListPath))
+            {
+                Directory.CreateDirectory(objPlaylist.GetDirectory());
+                 
+                
+            }
             FileStream fs = new FileStream(Playlist._strPlayListPath, FileMode.Create);
             BinaryFormatter formatter = new BinaryFormatter();
             formatter.Serialize(fs, objPlaylist);
@@ -224,7 +230,7 @@ namespace OscarPlayer
                 Playlist objPlaylist = (Playlist)formatter.Deserialize(fs);
                 foreach (string item in objPlaylist.ReadPathsFromList())
                 {
-                    this.lbxPlaylist.Items.Add(this._objPlaylist.AddPathToList(item));
+                    this.lbxPlaylist.Items.Add(this._objPlaylist.ParsePathToFile(item));
                 }
                 fs.Close();
             }
@@ -255,6 +261,7 @@ namespace OscarPlayer
                 
             }
             _objPlayer.PlaySound(path);
+            
             
         }
 

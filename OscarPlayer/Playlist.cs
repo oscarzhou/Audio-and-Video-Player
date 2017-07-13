@@ -5,13 +5,13 @@ using System.IO;
 namespace OscarPlayer
 {
     [Serializable]
-    class Playlist
+    public class Playlist
     {
-        
+
         public static string _strPlayListPath = Directory.GetCurrentDirectory() + "/Playlist/Playlist.lst";
         private List<string> lstPath = new List<string>();
 
-        public string AddPathToList(string path)
+        public string ParsePathToFile(string path)
         {
             this.lstPath.Add(path);
             int pos = path.LastIndexOf(@"\", StringComparison.Ordinal);
@@ -31,6 +31,16 @@ namespace OscarPlayer
         public List<string> ReadPathsFromList()
         {
             return this.lstPath;
+        }
+
+        public string GetFile()
+        {
+            return Directory.GetCurrentDirectory() + "/Playlist/Playlist.lst";
+        }
+
+        public string GetDirectory()
+        {
+            return Directory.GetCurrentDirectory() + "/Playlist";
         }
     }
 }
